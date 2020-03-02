@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import sources, math
-
+import numpy as np
 
 
 
@@ -24,7 +24,7 @@ class Graph:
 class KCenterSolver(ABC):
     def __init__(self, graph:Graph):
         self.graph = graph
-    
+    @abstractmethod    
     def solve(self, k):
         pass
 
@@ -74,12 +74,49 @@ class BerkleySolver(KCenterSolver):
         print(S1)
         return S1   
 
-def main()
-:
+class GreedySolver(KCenterSolver):
+    def __init__(self, graph):
+        super().__init__(graph)
+        self.solution = self.graph.cardV * [False]
+
+
+    def printSolution(self):
+        for i in range(len(self.solution)):
+            if self.solution[i]:
+                print(i, end = ' ')
+        print()
+
+
+    def finMin(self, i):
+        neighbours = self.graph.get_neighbours(i+1)
+        min_w = neighbours[0][0]
+        for neighbour in neighbours:
+            min_w = min(neighbour[0], min_w)
+        return min_w
+
+
+    def solve(self, k):
+        
+        self.solution[np.random.randint(0, self.graph.cardV)] = True
+        for _ in range(1, k):
+            bestCenter = -1
+            currentMax = -1
+            for i in range(0, self.graph.cardV):
+                if not self.solution[i]:
+                    min_i = self.finMin(i)
+                    if min_i > currentMax:
+                        currentMax = min_i
+                        bestCenter = i
+
+
+        self.solution[bestCenter-1] = True
+        self.printSolution()
+
+def main():
     n = 10
     weights, adjacency_list = sources.generateData(n)
     g = Graph(adjacency_list, weights, list(range(1, n+1)))
-    solver = BerkleySolver(g)
+    solver = GreedySolver(g)
     
     solver.solve(2)
 
