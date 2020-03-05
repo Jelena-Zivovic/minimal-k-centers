@@ -4,9 +4,9 @@ from queue import PriorityQueue
 
 def generateData(n):
     weights = []
-    adjacency_list = {k : [] for k in range(1, n+1)}
-    for i in range(1,n+1):
-        for j in range(i+1, n+1):
+    adjacency_list = {k : [] for k in range(0, n)}
+    for i in range(0,n):
+        for j in range(i, n):
             weight = np.random.randint(1, 300)
             weights.append(weight)
             adjacency_list[i].append((weight, j))

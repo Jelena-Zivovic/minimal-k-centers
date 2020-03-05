@@ -42,7 +42,7 @@ class BerkleySolver(KCenterSolver):
     def solve(self, k):
         if k == self.graph.cardV:
             return            
-        low = 1
+        low = 0
         high = int(self.graph.cardE)
         S1 = set()
         while high != low + 1:
@@ -88,17 +88,20 @@ class GreedySolver(KCenterSolver):
 
 
     def finMin(self, i):
-        neighbours = self.graph.get_neighbours(i+1)
-        min_w = neighbours[0][0]
-        for neighbour in neighbours:
-            min_w = min(neighbour[0], min_w)
+        neighbours_of_i = self.graph.get_neighbours(i)
+        #min_w = neighbours[0][0]
+        min_w = float('inf')
+        for neighbour in neighbours_of_i:
+            if self.solution[neighbour[1]]:
+                min_w = min(neighbour[0], min_w)
+        
         return min_w
 
 
     def solve(self, k):
         
         self.solution[np.random.randint(0, self.graph.cardV)] = True
-        for _ in range(1, k):
+        for t in range(1, k):
             bestCenter = -1
             currentMax = -1
             for i in range(0, self.graph.cardV):
@@ -107,18 +110,18 @@ class GreedySolver(KCenterSolver):
                     if min_i > currentMax:
                         currentMax = min_i
                         bestCenter = i
-
-
-        self.solution[bestCenter-1] = True
+            self.solution[bestCenter] = True
+            
         self.printSolution()
 
 def main():
-    n = 10
+    n = 100
     weights, adjacency_list = sources.generateData(n)
-    g = Graph(adjacency_list, weights, list(range(1, n+1)))
+    g = Graph(adjacency_list, weights, list(range(n)))
     solver = GreedySolver(g)
-    
-    solver.solve(2)
+    ber_solver = BerkleySolver(g)
+    solver.solve(10)
+    ber_solver.solve(10)
 
 
 if __name__ == "__main__":
