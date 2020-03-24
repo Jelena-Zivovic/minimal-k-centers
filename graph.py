@@ -130,11 +130,12 @@ class GreedySolver(KCenterSolver):
         print(self.evaluate(self.solution))
 
 class EvolutionarySolver(KCenterSolver):
-    def __init__(self, graph, pop_size, iters):
+    def __init__(self, graph, pop_size, iters, mutation_rate):
         super().__init__(graph)
         self.pop_size = pop_size
         self.population = []
         self.iters = iters
+        self.mutation_rate = mutation_rate
 
     def __initialize(self, k):
         for i in range(self.pop_size):
@@ -150,10 +151,35 @@ class EvolutionarySolver(KCenterSolver):
         best = max(contestants, key = lambda x: x[1])
         return best[0]
 
-    def __crossover(self, child1:list, child2:list):
-        return (child1, child2)
+    def __crossover(self, parent1:list, parent2:list, k):
+        return (parent1, parent2)
+        child1 = parent1[:]
+        child2 = parent2[:]
+        index1 = []
+        index2 = []
+        for i in range(len(parent1)):
+            if parent1[i]:
+                index1.append(i)
+            if parent2[i]:
+                index2.append(i)
+
+        samp1 = random.sample(index1, int(k/2))
+        samp2 = random.sample(index2, int(k/2))
+        for s1, s2 in zip(samp1, samp2):
+            tmp = child1[s1] 
+            child1[s1] = child2[s1]  
+            child2[s1] = tmp
+
+            tmp = child2[s2] 
+            child2[s2] = child1[s2] 
+            child1[s2] = tmp
+            
+
+        return (child1[:], child2[:])
 
     def __mutate(self, child:list):
+        if random.random() > self.mutation_rate:
+            return child
         index1 = random.randint(0, self.graph.cardV-1)
         changed_val = child[index1]
         child[index1] = not child[index1]
@@ -179,7 +205,7 @@ class EvolutionarySolver(KCenterSolver):
             for i in range(int(self.pop_size/8), self.pop_size, 2):
                 parent1 = self.__selection(pop_with_fit)
                 parent2 = self.__selection(pop_with_fit)
-                child1, child2 = self.__crossover(parent1, parent2)
+                child1, child2 = self.__crossover(parent1, parent2, k)
                 self.__mutate(child1)
                 self.__mutate(child2)
                 new_population.append(child1)
@@ -190,13 +216,13 @@ class EvolutionarySolver(KCenterSolver):
         print(self.evaluate(self.population[0]))
 
 def main():
-    n = 10
+    n = 10000
     weights, adjacency_list = sources.generateData(n)
     g = Graph(adjacency_list, weights, list(range(n)))
     greedy_solver = GreedySolver(g)
-    evol_solver = EvolutionarySolver(g, 1000, 300)
-    greedy_solver.solve(5)
-    evol_solver.solve(5)
+    evol_solver = EvolutionarySolver(g, 100, 300, 1)
+    greedy_solver.solve(100)
+    evol_solver.solve(100)
 
 
 if __name__ == "__main__":
