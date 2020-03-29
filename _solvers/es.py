@@ -70,7 +70,6 @@ class EvolutionarySolver(KCenterSolver):
             fitnesses = list(map(lambda x: self.evaluate(x), self.population))
             pop_with_fit = list(zip(self.population, fitnesses))
             pop_with_fit.sort(key=lambda t: t[1], reverse=False)
-            print(pop_with_fit[0][1], iteration)
             new_population = []
             for i in range(int(10)):
                 new_population.append(pop_with_fit[i][0])
