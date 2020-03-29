@@ -41,3 +41,4 @@ class GreedySolver(KCenterSolver):
         #self.printSolution()
         print('------GREEDY-------')
         print(self.evaluate(self.solution))
+        return self.solution

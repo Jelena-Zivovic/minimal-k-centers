@@ -86,6 +86,7 @@ class VariableNeighbourhoodSearch(KCenterSolver):
                     
         print("--------VARIABLE NEIGHBORHOOD SEARCH----------")
         print(best_value)
+        return self.current_solution
             
         
         
