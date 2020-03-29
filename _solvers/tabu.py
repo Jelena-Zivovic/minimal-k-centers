@@ -14,7 +14,7 @@ class TabuSolver(KCenterSolver):
             self.current_solution[i] = True
 
     def get_neighbours(self):
-        neighbours = set()
+        neighbours = list()
 
         transformed_solution = self.transform_solution(self.current_solution)
         for point in transformed_solution:
@@ -24,17 +24,25 @@ class TabuSolver(KCenterSolver):
                 if neigh[0] < closest_distance:
                     closest_distance, closest_negihbour = neigh
 
-            neighbours.add(closest_negihbour)
-        print(transformed_solution, neighbours)
+            neighbours.append(closest_negihbour)
+        # print(transformed_solution, neighbours)
         return zip(transformed_solution, neighbours)
 
+
+    def invert(self, idx1, idx2):
+        tmp = self.current_solution[idx1]
+        self.current_solution[idx1] = self.current_solution[idx2]
+        self.current_solution[idx2] = tmp
+
     @staticmethod
-    def get_allowed(A: set, B: set):
-        allowed = set()
+    def get_allowed(A: list, B: list, current_solution):
+        
+        allowed = list()
         for a in A:
-            if a[1] not in B:
-                allowed.add(a)
-                
+            current_solution.invert(a[0], a[1])
+            if current_solution not in B:
+                allowed.append(a)            
+            current_solution.invert(a[1], a[0])
         return random.sample(allowed, len(allowed))
 
     def solve(self, k):
@@ -42,11 +50,12 @@ class TabuSolver(KCenterSolver):
         self.best_value = self.evaluate(self.current_solution)
         self.current_value = self.best_value
         self.best_solution = self.current_solution[:]
-        T = set()
+        T = list()
         i = 0
         occured = 0
         while i < self.__iters:
-            indexes = TabuSolver.get_allowed(self.get_neighbours(), T)
+            # print(T)
+            indexes = TabuSolver.get_allowed(list(self.get_neighbours()), T, self)
             for (old_part, new_part) in indexes:
                 if new_part not in self.current_solution:
                     break
@@ -55,8 +64,9 @@ class TabuSolver(KCenterSolver):
             tmp_solution[new_part] = True
             tmp_value = self.evaluate(tmp_solution)
             if  tmp_value < self.current_value:
-                self.current_solution = tmp_solution
-
+                self.current_solution = tmp_solution[:]
+            else:
+                T.append(self.transform_solution(tmp_solution[:]))        
             if tmp_value < self.best_value:
                 self.best_value = tmp_value
             i += 1
