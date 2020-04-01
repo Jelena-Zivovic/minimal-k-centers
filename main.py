@@ -10,19 +10,22 @@ import sources
 
 
 def main():
-    n = 100
+    n = 30000
+    k = 5
     weights, adjacency_list = sources.generateData(n)
     g = Graph(adjacency_list, weights, list(range(n)))
+    berkley_solver = BerkleySolver(g, 3)
+    berkley_solver.solve(k)
     greedy_solver = GreedySolver(g)
-    greedy_solver.solve(4)
-    # evol_solver = EvolutionarySolver(g, 100, 20, 0.9, 25)
-    # evol_solver.solve(3)
+    greedy_solver.solve(k)
+    evol_solver = EvolutionarySolver(g, 100, 20, 0.9, 25)
+    evol_solver.solve(k)
     simulated_annealing_solver = SimulatedAnnealingSolver(g)
-    simulated_annealing_solver.solve(4, 100)
-    tabu_solver = TabuSolver(g, 30)
-    tabu_solver.solve(4);
+    simulated_annealing_solver.solve(k, 100)
+    tabu_solver = TabuSolver(g, 3000)
+    tabu_solver.solve(k);
     variable_neighborhood_search_solver = VariableNeighbourhoodSearch(g)
-    variable_neighborhood_search_solver.solve(4, 100, 5)
+    variable_neighborhood_search_solver.solve(k, 100, 5)
 
 
 if __name__ == "__main__":
