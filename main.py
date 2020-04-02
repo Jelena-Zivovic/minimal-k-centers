@@ -12,12 +12,12 @@ import sources
 
 def main():
     n = 20
-    k = 5
+    k = 3
     weights, adjacency_list = sources.generateData(n)
     g = Graph(adjacency_list, weights, list(range(n)))
     bf_solver = BruteForceSolver(g)
     bf_solver.solve(k)
-    berkley_solver = BerkleySolver(g, 3)
+    berkley_solver = BerkleySolver(g, 200)
     berkley_solver.solve(k)
     greedy_solver = GreedySolver(g)
     greedy_solver.solve(k)
