@@ -5,7 +5,6 @@ import random
 
 
 
-
 class Graph:
     def __init__(self, adjacency_list: dict, weights: list, vertices: list):
         self.adjacency_list = adjacency_list
