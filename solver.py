@@ -12,6 +12,7 @@ class KCenterSolver(ABC):
         min_dist = self.graph.cardV * [float('inf')]
         for ind in range(len(individual)):
             if individual[ind]:
+                min_dist[ind] = 0
                 for (w, i) in self.graph.get_neighbours(ind):
                     if w < min_dist[i]:
                         min_dist[i] = w
