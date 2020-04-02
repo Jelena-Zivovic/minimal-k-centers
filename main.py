@@ -12,7 +12,7 @@ import sources
 
 
 def main():
-    n = 20
+    n = 50
     k = 5
     weights, adjacency_list = sources.generateData(n)
     g = Graph(adjacency_list, weights, list(range(n)))
@@ -32,7 +32,7 @@ def main():
     #variable_neighborhood_search_solver.solve(k, 100, 5)
     
     dominating_set_solver = DominatingSet(g)
-    dominating_set_solver.solve(5)
+    dominating_set_solver.solve(k)
 
 
 if __name__ == "__main__":

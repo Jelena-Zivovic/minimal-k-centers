@@ -13,6 +13,7 @@ class Graph:
         self.cardV = len(vertices)
         self.cardE = len(weights)
         
+        
     def __str__(self):
         return str(self.adjacency_list)
 
