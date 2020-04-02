@@ -12,13 +12,8 @@ import sources
 
 
 def main():
-<<<<<<< HEAD
-    n = 50
-    k = 5
-=======
     n = 20
     k = 3
->>>>>>> refs/remotes/origin/master
     weights, adjacency_list = sources.generateData(n)
     g = Graph(adjacency_list, weights, list(range(n)))
 
@@ -37,13 +32,8 @@ def main():
     variable_neighborhood_search_solver = VariableNeighbourhoodSearch(g)
     variable_neighborhood_search_solver.solve(k, 100, 5)
     
-<<<<<<< HEAD
     dominating_set_solver = DominatingSet(g)
     dominating_set_solver.solve(k)
-=======
-    # dominating_set_solver = DominatingSet(g)
-    # dominating_set_solver.solve(5)
->>>>>>> refs/remotes/origin/master
 
 
 if __name__ == "__main__":
