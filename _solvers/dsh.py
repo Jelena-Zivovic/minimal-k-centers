@@ -1,7 +1,7 @@
 from solver import KCenterSolver
 import random
 from graph import Graph
-import networkx as nx
+import copy
 
 class DominatingSet(KCenterSolver):
     def __init__(self, graph):
@@ -26,8 +26,11 @@ class DominatingSet(KCenterSolver):
         weights.sort()      
         return Graph(G, weights, vertices)
             
-    def isGraphConnected(self, G):
+    def is_graph_connected(self, G):
         #dfs se koristi za proveru
+        
+        if len(G.vertices) == 0:
+            return False
         
         visited = set([])
         visited.add(G.vertices[0])
@@ -55,13 +58,67 @@ class DominatingSet(KCenterSolver):
                 
         return False
         
+    
+    def dominating_set_alg(self, g):
+        cov_cnt = dict()
+        for v in g.vertices:
+            cov_cnt[v] = len(g.adjacency_list[v]) + 1 
+       
+        
+        score = copy.deepcopy(cov_cnt)
+        D = set([])
         
         
+        for i in range(len(g.vertices)):
+            min_score_node = -1
+            min_score = float('inf')
+            
+            for s in score:
+                if score[s] < min_score:
+                    min_score = score[s]
+                    min_score_node = s 
+            
+            exist = False
+            y = []
+            
+            for v in g.vertices:
+                neighbors = [n[1] for n in g.get_neighbours(v)]
+               
+
+                if (min_score_node in neighbors) and cov_cnt[v] == 1:
+                    D.add(min_score_node)
+                    exist = True
+                    cov_cnt[v] = 0
+                    y.append(v)
+                    
+            if not exist:
+                for a in y:
+                    if cov_cnt[a] > 0:
+                        cov_cnt[a] -= 1
+                        score[a] += 1 
+            score[min_score_node] = float('inf')
+                    
+                
+        
+        return D
+                
+
         
     def solve(self, k):
         
         for w in self.graph.weights:
             G = self.parametricBottleneck(w)
+            
+            #print(self.is_graph_connected(G))
+            
+            if (self.is_graph_connected(G)):
+            
+                D = self.dominating_set_alg(G)
+                
+                if len(D) == k:
+                    print("-------DHS--------")
+                    print(D)
+                    return list(D)
             
             
             
