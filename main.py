@@ -5,15 +5,20 @@ from _solvers.sa import SimulatedAnnealingSolver
 from _solvers.es import EvolutionarySolver
 from _solvers.tabu import TabuSolver
 from _solvers.vns import VariableNeighbourhoodSearch
+from _solvers.bruteforce import BruteForceSolver
+from _solvers.dsh import DominatingSet
 
 import sources
 
 
 def main():
-    n = 30000
-    k = 5
+    n = 20
+    k = 3
     weights, adjacency_list = sources.generateData(n)
     g = Graph(adjacency_list, weights, list(range(n)))
+
+    bf_solver = BruteForceSolver(g)
+    bf_solver.solve(k)
     berkley_solver = BerkleySolver(g, 3)
     berkley_solver.solve(k)
     greedy_solver = GreedySolver(g)
@@ -26,6 +31,8 @@ def main():
     tabu_solver.solve(k);
     variable_neighborhood_search_solver = VariableNeighbourhoodSearch(g)
     variable_neighborhood_search_solver.solve(k, 100, 5)
+    dominating_set_solver = DominatingSet(g)
+    dominating_set_solver.solve(k)
 
 
 if __name__ == "__main__":

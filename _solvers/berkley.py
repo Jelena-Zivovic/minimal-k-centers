@@ -27,6 +27,7 @@ class BerkleySolver(KCenterSolver):
                 if weight < radius and neigh in C:
                     C.remove(neigh)
         if len(W) > k:
+<<<<<<< HEAD
             self.starting_radius += 5
             self.solve(k)
         else:
@@ -34,3 +35,9 @@ class BerkleySolver(KCenterSolver):
 
 
 
+=======
+            self.starting_radius += 10
+            self.solve(k)
+        else:
+            self.__print_solution(W) 
+>>>>>>> 30663d5b2e51308e1ef22779891299864ed8b9fb
