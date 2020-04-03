@@ -60,47 +60,51 @@ class DominatingSet(KCenterSolver):
         
     
     def dominating_set_alg(self, g):
-        cov_cnt = dict()
+        cover_count = {}
         for v in g.vertices:
-            cov_cnt[v] = len(g.adjacency_list[v]) + 1 
-       
+            cover_count[v] = len(g.adjacency_list[v])
         
-        score = copy.deepcopy(cov_cnt)
+        score = copy.deepcopy(cover_count)
+        
         D = set([])
         
-        
         for i in range(len(g.vertices)):
+            
             min_score_node = -1
             min_score = float('inf')
             
-            for s in score:
-                if score[s] < min_score:
-                    min_score = score[s]
-                    min_score_node = s 
+            for v in g.vertices:
+                if score[v] < min_score:
+                    min_score = score[v]
+                    min_score_node = v
+            
+            neighbors_min_score_node = [neighbour[1] for neighbour in g.get_neighbours(min_score_node)]
             
             exist = False
-            y = []
             
-            for v in g.vertices:
-                neighbors = [n[1] for n in g.get_neighbours(v)]
-               
-
-                if (min_score_node in neighbors) and cov_cnt[v] == 1:
-                    D.add(min_score_node)
+        
+            
+            for node in neighbors_min_score_node:
+                if cover_count[node] == 1:
+                    D.add(node)
                     exist = True
-                    cov_cnt[v] = 0
-                    y.append(v)
-                    
-            if not exist:
-                for a in y:
-                    if cov_cnt[a] > 0:
-                        cov_cnt[a] -= 1
-                        score[a] += 1 
+            
+            if exist:     
+                  
+                for node in neighbors_min_score_node:
+                    cover_count[node] = 0
+            else:
+                for node in neighbors_min_score_node:
+                    if cover_count[node] > 0:
+                        cover_count[node] -= 1
+                        
+                        score[node] += 1 
+            
             score[min_score_node] = float('inf')
-                    
-                
+        
         
         return D
+        
                 
 
         
@@ -116,9 +120,15 @@ class DominatingSet(KCenterSolver):
                 D = self.dominating_set_alg(G)
                 
                 if len(D) == k:
-                    print("-------DHS--------")
-                    print(D)
-                    return list(D)
+                    solution = [False] * self.graph.cardV
+                    for node in list(D):
+                        solution[node] = True
+                    
+                    print("--------DOMINATING SET------------")
+                    print(self.evaluate(solution))
+                    return
+                
+               
             
             
             
