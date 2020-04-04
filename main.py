@@ -21,11 +21,11 @@ def generateJSON(n):
 
 
 def main():
-    
+    n = 20
     k = 4
-    for i in range(2000, 10000, 1000):
-        generateJSON(i)        
-    # g = Graph(adjacency_list, list(range(n)))
+    weights, adjacency_list = sources.generateData(n)
+
+    g = Graph(adjacency_list, weights, list(range(n)))
 
     # bf_solver = BruteForceSolver(g)
     # bf_solver.solve(k)

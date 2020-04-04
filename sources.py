@@ -5,22 +5,14 @@ from math import sqrt
 import multiprocessing
 
 
-def genPairs(n):
-    return (np.random.uniform(0, 3000), np.random.uniform(0, 3000))
-
-def transform(pts):
-    pt1 = pts[0]
-    pt2 = pts[1]
-    return sqrt((pt1[0] + pt2[0])**2 + (pt1[1] + pt2[1])**2)
+def genRandom(x):
+    return np.random.uniform(100, 200)
 
 
 def getWeights(n):
     pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
     #generate n random point in 2d plane
-    points = pool.map(genPairs, range(n))
-    pairs_of_citis = list(combinations(points, 2))
-    distances = pool.map(transform, pairs_of_citis)
-    return distances
+    return pool.map(genRandom, range(n * (n-1) // 2))
 
 def generateData(n):
     weights = getWeights(n)
