@@ -47,8 +47,8 @@ class SimulatedAnnealingSolver(KCenterSolver):
         self.current_solution[index_true] = True
         self.current_solution[index_false] = False
 
-    def solve(self, k, iters):
-
+    def solve(self, k):
+        iters = 100
         self.__initialize(k)
         current_value = self.evaluate(self.current_solution)
         best_value = current_value

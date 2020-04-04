@@ -64,7 +64,9 @@ class VariableNeighbourhoodSearch(KCenterSolver):
             index_true, index_false = self.invert(random_index)
             return index_true, index_false
 
-    def solve(self, k, iters, maxEnv):
+    def solve(self, k):
+        iters = 500
+        maxEnv = 5
         self.__initialize(k)
         current_value = self.evaluate(self.current_solution)
         best_value = current_value
@@ -86,3 +88,4 @@ class VariableNeighbourhoodSearch(KCenterSolver):
 
         print("--------VARIABLE NEIGHBORHOOD SEARCH----------")
         print(best_value)
+        return best_value

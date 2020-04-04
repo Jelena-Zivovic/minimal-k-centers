@@ -110,10 +110,11 @@ class DominatingSet(KCenterSolver):
         
     def solve(self, k):
         
+        current_solution = [False] * self.graph.cardV
+        _min = float('inf')
+        
         for w in self.graph.weights:
             G = self.parametricBottleneck(w)
-            
-            #print(self.is_graph_connected(G))
             
             if (self.is_graph_connected(G)):
             
@@ -123,10 +124,15 @@ class DominatingSet(KCenterSolver):
                     solution = [False] * self.graph.cardV
                     for node in list(D):
                         solution[node] = True
+                        
+                    if self.evaluate(solution) < _min:
+                        _min = self.evaluate(solution)
+                        current_solution = copy.deepcopy(solution)
                     
-                    print("--------DOMINATING SET------------")
-                    print(self.evaluate(solution))
-                    return
+        print("--------DOMINATING SET------------")
+        print(self.evaluate(current_solution))
+        return self.evaluate(current_solution)
+                    
                 
                
             
