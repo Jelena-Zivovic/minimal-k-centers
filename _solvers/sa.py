@@ -70,3 +70,4 @@ class SimulatedAnnealingSolver(KCenterSolver):
 
         print("---------SIMULATED ANNEALING---------")
         print(best_value)
+        return best_value
