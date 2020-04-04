@@ -3,6 +3,7 @@ from queue import PriorityQueue
 from itertools import combinations
 from math import sqrt
 
+
 def transform(pts):
     pt1 = pts[0]
     pt2 = pts[1]
