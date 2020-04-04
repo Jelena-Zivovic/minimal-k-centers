@@ -2,7 +2,11 @@ import numpy as np
 from queue import PriorityQueue
 from itertools import combinations
 from math import sqrt
+import multiprocessing
 
+
+def genPairs(n):
+    return (np.random.uniform(0, 3000), np.random.uniform(0, 3000))
 
 def transform(pts):
     pt1 = pts[0]
@@ -11,10 +15,11 @@ def transform(pts):
 
 
 def getWeights(n):
+    pool = multiprocessing.Pool(processes=multiprocessing.cpu_count())
     #generate n random point in 2d plane
-    points = [(np.random.uniform(0, 3000), np.random.uniform(0, 3000)) for _ in range(n)]
+    points = pool.map(genPairs, range(n))
     pairs_of_citis = list(combinations(points, 2))
-    distances = list(map(transform, pairs_of_citis))
+    distances = pool.map(transform, pairs_of_citis)
     return distances
 
 def generateData(n):

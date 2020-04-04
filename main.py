@@ -10,15 +10,22 @@ from _solvers.dsh import DominatingSet
 
 import sources
 import time
+import json
+import multiprocessing
+
+def generateJSON(n):
+    with open('file' + str(n) + '.json', "w") as file:
+            weights, adjacency_list = sources.generateData(n)
+            json.dump(adjacency_list, file)
+        
+
 
 def main():
-    n = 30
+    
     k = 4
-    start = time.perf_counter()
-    weights, adjacency_list = sources.generateData(n)
-    stop = time.perf_counter()
-    print(stop - start)
-    g = Graph(adjacency_list, weights, list(range(n)))
+    for i in range(2000, 10000, 1000):
+        generateJSON(i)        
+    # g = Graph(adjacency_list, list(range(n)))
 
     # bf_solver = BruteForceSolver(g)
     # bf_solver.solve(k)
