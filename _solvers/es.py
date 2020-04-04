@@ -27,6 +27,7 @@ class EvolutionarySolver(KCenterSolver):
     def __crossover(self, parent1: list, parent2: list, k):
         child1 = parent1[:]
         child2 = parent2[:]
+        
         index1 = []
         index2 = []
         for i in range(len(parent1)):
@@ -37,7 +38,9 @@ class EvolutionarySolver(KCenterSolver):
 
         samp1 = random.sample(index1, int(k/2))
         samp2 = random.sample(index2, int(k/2))
+
         for s1, s2 in zip(samp1, samp2):
+            t1 = sum(child1)
             tmp = child1[s1]
             child1[s1] = child2[s1]
             child2[s1] = tmp
@@ -45,7 +48,9 @@ class EvolutionarySolver(KCenterSolver):
             tmp = child2[s2]
             child2[s2] = child1[s2]
             child1[s2] = tmp
-
+            t2 = sum(child2)
+            if t1 != t2:
+                print(sum(child1), sum(child2), tmp)
         return (child1[:], child2[:])
 
     def __mutate(self, child: list):
