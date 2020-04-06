@@ -38,6 +38,5 @@ class GreedySolver(KCenterSolver):
                         bestCenter = i
             self.solution[bestCenter] = True
             
-        #self.printSolution()
         print('------GREEDY-------')
         print(self.evaluate(self.solution))
