@@ -21,14 +21,14 @@ def generateJSON(n):
 
 
 def main():
-    n = 200
+    n = 20
     k = 5
     weights, adjacency_list = sources.generateData(n)
 
     g = Graph(adjacency_list, weights, list(range(n)))
 
-    # bf_solver = BruteForceSolver(g)
-    # bf_solver.solve(k)
+    bf_solver = BruteForceSolver(g)
+    bf_solver.solve(k)
     berkley_solver = BerkleySolver(g, 3)
     berkley_solver.solve(k)
     greedy_solver = GreedySolver(g)
@@ -36,12 +36,11 @@ def main():
     evol_solver = EvolutionarySolver(g, 100, 20, 0.9, 25)
     evol_solver.solve(k)
     simulated_annealing_solver = SimulatedAnnealingSolver(g)
-    simulated_annealing_solver.solve(k, 100)
+    simulated_annealing_solver.solve(k)
     tabu_solver = TabuSolver(g, 3000)
-    tabu_solver.solve(k)
+    tabu_solver.solve(k);
     variable_neighborhood_search_solver = VariableNeighbourhoodSearch(g)
-    variable_neighborhood_search_solver.solve(k, 100, 5)
-    
+    variable_neighborhood_search_solver.solve(k)    
     dominating_set_solver = DominatingSet(g)
     dominating_set_solver.solve(k)
 
