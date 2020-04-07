@@ -7,6 +7,7 @@ from _solvers.tabu import TabuSolver
 from _solvers.vns import VariableNeighbourhoodSearch
 from _solvers.bruteforce import BruteForceSolver
 from _solvers.dsh import DominatingSet
+from _solvers.scatter import ScatterSolver
 
 import sources
 import time
@@ -21,20 +22,22 @@ def generateJSON(n):
 
 
 def main():
-    n = 20
-    k = 5
+    n = 50
+    k = 9
     weights, adjacency_list = sources.generateData(n)
 
     g = Graph(adjacency_list, weights, list(range(n)))
 
-    bf_solver = BruteForceSolver(g)
-    bf_solver.solve(k)
+    # bf_solver = BruteForceSolver(g)
+    # bf_solver.solve(k)
     berkley_solver = BerkleySolver(g, 3)
     berkley_solver.solve(k)
     greedy_solver = GreedySolver(g)
     greedy_solver.solve(k)
-    evol_solver = EvolutionarySolver(g, 100, 20, 0.9, 25)
+    evol_solver = EvolutionarySolver(g, 100, 20, 0.9, 25, 1)
     evol_solver.solve(k)
+    sc_solver = ScatterSolver(g, 100, 20, 4, 15)
+    sc_solver.solve(k)    
     simulated_annealing_solver = SimulatedAnnealingSolver(g)
     simulated_annealing_solver.solve(k)
     tabu_solver = TabuSolver(g, 3000)

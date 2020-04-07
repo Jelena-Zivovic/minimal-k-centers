@@ -3,13 +3,14 @@ import random
 
 
 class EvolutionarySolver(KCenterSolver):
-    def __init__(self, graph, pop_size, iters, mutation_rate, tournament_size):
+    def __init__(self, graph, pop_size, iters, mutation_rate, tournament_size, selection_type):
         super().__init__(graph)
         self.pop_size = pop_size
         self.population = []
         self.iters = iters
         self.mutation_rate = mutation_rate
         self.tournament_size = tournament_size
+        self.selection_type = selection_type
 
     def __initialize(self, k):
         for i in range(self.pop_size):
@@ -20,8 +21,11 @@ class EvolutionarySolver(KCenterSolver):
             self.population.append(new_individual)
 
     def __selection(self, population: list):
-        contestants = random.sample(population, self.tournament_size)
-        best = max(contestants, key=lambda x: x[1])
+        if self.selection_type == 1:
+            contestants = random.sample(population, self.tournament_size)
+            best = max(contestants, key=lambda x: x[1])
+        else:
+            return
         return best[0]
 
     def __crossover(self, parent1: list, parent2: list, k):
@@ -72,7 +76,7 @@ class EvolutionarySolver(KCenterSolver):
         self.__initialize(k)
 
         for iteration in range(self.iters):
-
+            
             fitnesses = list(map(lambda x: self.evaluate(x), self.population))
             pop_with_fit = list(zip(self.population, fitnesses))
             pop_with_fit.sort(key=lambda t: t[1], reverse=False)
@@ -90,6 +94,7 @@ class EvolutionarySolver(KCenterSolver):
                 new_population.append(child2)
 
             self.population = new_population
-
+            # if iteration % 100 == 0:
+            #     print(self.evaluate(self.population[0]))
         print('-----EVOLUTIONARY------------')
         print(self.evaluate(self.population[0]))
