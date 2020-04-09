@@ -3,9 +3,10 @@ import random
 
 
 class TabuSolver(KCenterSolver):
-    def __init__(self, graph, iters):
+    def __init__(self, graph, iters, type_of_choice):
         super().__init__(graph)
         self.__iters = iters
+        self.type_of_choice = type_of_choice
 
     def __initalize(self, k):
         idx = random.sample(range(self.graph.cardV), k)
@@ -43,7 +44,10 @@ class TabuSolver(KCenterSolver):
             if current_solution not in B:
                 allowed.append(a)            
             current_solution.invert(a[1], a[0])
-        return random.sample(allowed, len(allowed))
+        if current_solution.type_of_choice == 1:
+            return sorted(allowed, key= lambda t: current_solution.evaluate(t))
+        else:
+            return random.sample(allowed, len(allowed))
 
     def solve(self, k):
         self.__initalize(k)
@@ -54,7 +58,7 @@ class TabuSolver(KCenterSolver):
         i = 0
         occured = 0
         while i < self.__iters:
-            # print(T)
+
             indexes = TabuSolver.get_allowed(list(self.get_neighbours()), T, self)
             for (old_part, new_part) in indexes:
                 if new_part not in self.current_solution:
