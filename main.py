@@ -34,8 +34,8 @@ def main():
     # berkley_solver.solve(k)
     # greedy_solver = GreedySolver(g)
     # greedy_solver.solve(k)
-    # evol_solver = EvolutionarySolver(g, 100, 20, 0.9, 25, 1)
-    # evol_solver.solve(k)
+    evol_solver = EvolutionarySolver(g, 100, 20, 0.9, 25, 2)
+    evol_solver.solve(k)
     # sc_solver = ScatterSolver(g, 100, 20, 4, 15)
     # sc_solver.solve(k)    
     # simulated_annealing_solver = SimulatedAnnealingSolver(g)
@@ -46,8 +46,8 @@ def main():
     tabu_solver2.solve(k);
     
 
-    # variable_neighborhood_search_solver = VariableNeighbourhoodSearch(g)
-    # variable_neighborhood_search_solver.solve(k)    
+    variable_neighborhood_search_solver = VariableNeighbourhoodSearch(g)
+    variable_neighborhood_search_solver.solve(k)    
     # dominating_set_solver = DominatingSet(g)
     # dominating_set_solver.solve(k)
 

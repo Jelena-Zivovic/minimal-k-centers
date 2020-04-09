@@ -23,10 +23,16 @@ class EvolutionarySolver(KCenterSolver):
     def __selection(self, population: list):
         if self.selection_type == 1:
             contestants = random.sample(population, self.tournament_size)
-            best = max(contestants, key=lambda x: x[1])
+            best = min(contestants, key=lambda x: x[1])
+            return best[0]
         else:
-            return
-        return best[0]
+            total_fitness = sum(map(lambda x: 1/x[1], population))
+            treshold = random.uniform(0, total_fitness)
+            cum_sum = 0.0
+            for (solution, fitness) in population:
+                cum_sum += 1/fitness
+                if treshold <= cum_sum:
+                    return solution
 
     def __crossover(self, parent1: list, parent2: list, k):
         child1 = parent1[:]
