@@ -8,6 +8,9 @@ class BruteForceSolver(KCenterSolver):
         super().__init__(graph)
         self.best_value = math.inf
     
+    def __repr__(self):
+        return "BruteForce: "
+
     def evaluate_brut(self, solution):
         min_dist = self.graph.cardV * [math.inf]
         for node in solution:
@@ -21,6 +24,8 @@ class BruteForceSolver(KCenterSolver):
     def solve(self, k):
         solutions = list(combinations(self.graph.vertices, k))
         values = map(self.evaluate_brut, solutions)
-        print('------BRUT FORS----------')
-        print(sorted(list(values))[0])
+        best = sorted(list(values))[0]
+        print(self, end=" ")
+
+        print(best)
             

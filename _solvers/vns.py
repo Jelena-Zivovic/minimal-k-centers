@@ -7,6 +7,9 @@ class VariableNeighbourhoodSearch(KCenterSolver):
         super().__init__(graph)
         self.current_solution = [False] * self.graph.cardV
 
+    def __repr__(self):
+        return "Variable search neighbourhood: "
+
     def __initialize(self, k):
         indices_of_first_solution = random.sample(
             range(0, self.graph.cardV), k)
@@ -86,6 +89,6 @@ class VariableNeighbourhoodSearch(KCenterSolver):
                 if new_value < best_value:
                     best_value = new_value
 
-        print("--------VARIABLE NEIGHBORHOOD SEARCH----------")
+        print(self, end = " ")
         print(best_value)
         return best_value

@@ -8,6 +8,9 @@ class TabuSolver(KCenterSolver):
         self.__iters = iters
         self.type_of_choice = type_of_choice
 
+    def __repr__(self):
+        return f"Tabu; Iterations {self.__iters} {self.type_of_choice}"
+
     def __initalize(self, k):
         idx = random.sample(range(self.graph.cardV), k)
         self.current_solution = self.graph.cardV * [False]
@@ -76,5 +79,5 @@ class TabuSolver(KCenterSolver):
             i += 1
             
 
-        print('------------TABU-------------')
+        print(self)
         print(self.best_value)

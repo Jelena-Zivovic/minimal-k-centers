@@ -12,6 +12,11 @@ class EvolutionarySolver(KCenterSolver):
         self.tournament_size = tournament_size
         self.selection_type = selection_type
 
+    def __repr__(self):
+        return f"Evoultionary; Pop_size {self.pop_size} " + \
+                f"Iters: {self.iters}" + f" Selection type: {self.selection_type}"\
+                + f" n = {self.graph.cardV}"
+
     def __initialize(self, k):
         for i in range(self.pop_size):
             idx = random.sample(range(self.graph.cardV), k)
@@ -102,5 +107,5 @@ class EvolutionarySolver(KCenterSolver):
             self.population = new_population
             # if iteration % 100 == 0:
             #     print(self.evaluate(self.population[0]))
-        print('-----EVOLUTIONARY------------')
+        print(self, end = " ")
         print(self.evaluate(self.population[0]))

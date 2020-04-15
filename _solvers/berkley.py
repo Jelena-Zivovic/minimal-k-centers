@@ -12,8 +12,11 @@ class BerkleySolver(KCenterSolver):
             for w, neigh in self.graph.get_neighbours(center):
                 if w < min_dist[neigh]:
                     min_dist[neigh] = w
-        print('-----BerkleySolver---------')
+        print(self, end = " ")
         print(sum(min_dist))
+
+    def __repr__(self):
+        return "2-approximation: "
 
     def solve(self, k):
         radius = self.starting_radius

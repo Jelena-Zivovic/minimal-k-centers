@@ -1,0 +1,12 @@
+Simulated annealing  147524.73675870046
+Vreme:  13.479073514001357 <class '_solvers.sa.SimulatedAnnealingSolver'>
+2-approximation:  154398.17072625877
+Vreme:  67.89763072200003 <class '_solvers.berkley.BerkleySolver'>
+Greedy  147714.83176516002
+Vreme:  105.51224854999964 <class '_solvers.greedy.GreedySolver'>
+Scatter:  147665.52761638432
+Vreme:  112.05848896899988 <class '_solvers.scatter.ScatterSolver'>
+Tabu; Iterations 3000 1
+147739.13090453314
+Vreme:  241.74723613199967 <class '_solvers.tabu.TabuSolver'>
+

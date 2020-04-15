@@ -26,6 +26,8 @@ class KCenterSolver(ABC):
 
         return transformed
 
+    def __repr__(self):
+        return "n: " + self.graph.cardV;
 
     @abstractmethod
     def solve(self, k):

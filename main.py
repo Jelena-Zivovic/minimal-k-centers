@@ -12,7 +12,7 @@ from _solvers.scatter import ScatterSolver
 import sources
 import time
 import json
-import multiprocessing
+import threading
 
 def generateJSON(n):
     with open('file' + str(n) + '.json', "w") as file:
@@ -20,37 +20,45 @@ def generateJSON(n):
             json.dump(adjacency_list, file)
         
 
+def testing(iterations, k, g):
+    start = time.perf_counter()
+    solver = EvolutionarySolver(g, 100, iterations, 0.9, 5, 1)
+    solver.solve(k)
+    end = time.perf_counter()
+    print((iterations, k, end - start))
+
+def test_final(k, solver):
+    now = time.perf_counter()
+    solver.solve(k)
+    end = time.perf_counter()
+    print("Vreme: ", end - now, type(solver))
+
 
 def main():
-    n = 50
-    k = 9
-    weights, adjacency_list = sources.generateData(n)
-
+    n = 1500
+    weights, adjacency_list = sources.generateData(n)    
     g = Graph(adjacency_list, weights, list(range(n)))
-
-    # bf_solver = BruteForceSolver(g)
-    # bf_solver.solve(k)
-    # berkley_solver = BerkleySolver(g, 3)
-    # berkley_solver.solve(k)
-    # greedy_solver = GreedySolver(g)
-    # greedy_solver.solve(k)
-    evol_solver = EvolutionarySolver(g, 100, 20, 0.9, 25, 2)
-    evol_solver.solve(k)
-    # sc_solver = ScatterSolver(g, 100, 20, 4, 15)
-    # sc_solver.solve(k)    
-    # simulated_annealing_solver = SimulatedAnnealingSolver(g)
-    # simulated_annealing_solver.solve(k)
-    tabu_solver1 = TabuSolver(g, 3000, 1)
-    tabu_solver1.solve(k);
-    tabu_solver2 = TabuSolver(g, 3000, 2)
-    tabu_solver2.solve(k);
-    
-
+    bf_solver = BruteForceSolver(g)
+    berkley_solver = BerkleySolver(g, 3)
+    greedy_solver = GreedySolver(g)
+    sc_solver = ScatterSolver(g, 100, 20, 4, 15)
+    simulated_annealing_solver = SimulatedAnnealingSolver(g)
+    ts = TabuSolver(g, 3000, 1)
     variable_neighborhood_search_solver = VariableNeighbourhoodSearch(g)
-    variable_neighborhood_search_solver.solve(k)    
-    # dominating_set_solver = DominatingSet(g)
-    # dominating_set_solver.solve(k)
+    dominating_set_solver = DominatingSet(g)
+    e_solver = EvolutionarySolver(g, 200, 500, 0.9, 5, 1)
+    solvers = [berkley_solver, greedy_solver, sc_solver, simulated_annealing_solver, 
+            ts] 
+
+    print('START TESTING')
+    threads = []
+    for i in range(len(solvers)):
+        t = threading.Thread(target=test_final, args = [15, solvers[i]])
+        t.start()
+        threads.append(t)
 
 
+    for t in threads:
+        t.join()
 if __name__ == "__main__":
     main()

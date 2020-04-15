@@ -3,7 +3,9 @@ from solver import (KCenterSolver, np)
 class GreedySolver(KCenterSolver):
     def __init__(self, graph):
         super().__init__(graph)
-        
+
+    def __repr__(self):
+        return "Greedy "
 
 
     def printSolution(self):
@@ -38,5 +40,5 @@ class GreedySolver(KCenterSolver):
                         bestCenter = i
             self.solution[bestCenter] = True
             
-        print('------GREEDY-------')
+        print(self, end= " ")
         print(self.evaluate(self.solution))

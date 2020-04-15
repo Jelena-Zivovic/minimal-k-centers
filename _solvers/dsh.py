@@ -6,6 +6,9 @@ import copy
 class DominatingSet(KCenterSolver):
     def __init__(self, graph):
         super().__init__(graph)
+
+    def __repr__(self):
+        return "Dominating set: "
         
     def parametricBottleneck(self, weight):
         G = {}
@@ -129,7 +132,7 @@ class DominatingSet(KCenterSolver):
                         _min = self.evaluate(solution)
                         current_solution = copy.deepcopy(solution)
                     
-        print("--------DOMINATING SET------------")
+        print(self, end = " ")
         print(self.evaluate(current_solution))
         return self.evaluate(current_solution)
                     

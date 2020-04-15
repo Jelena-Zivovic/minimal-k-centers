@@ -8,6 +8,9 @@ class ScatterSolver(KCenterSolver):
         self.b = b
         self.subset_size = subset_size
         self.number_of_sets = number_of_subs
+
+    def __repr__(self):
+        return "Scatter: "
     
     def div_gen_method(self, k: int):
         solutions = list()    
@@ -94,5 +97,5 @@ class ScatterSolver(KCenterSolver):
                 
                 if hasChangedRefSet:
                     new_solutions = True
-        print('----------SCATTER SEARCH--------------')        
+        print(self, end = " ")        
         print(self.evaluate(ref_best_solutions[0]))

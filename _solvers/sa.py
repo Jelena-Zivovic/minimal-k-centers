@@ -7,6 +7,9 @@ class SimulatedAnnealingSolver(KCenterSolver):
         super().__init__(graph)
         self.current_solution = [False] * self.graph.cardV
 
+    def __repr__(self):
+        return "Simulated annealing "
+
     def __initialize(self, k):
         indices_of_first_solution = random.sample(
             range(0, self.graph.cardV), k)
@@ -67,7 +70,6 @@ class SimulatedAnnealingSolver(KCenterSolver):
                     self.restore(index_true, index_false)
             if new_value < best_value:
                 best_value = new_value
-
-        print("---------SIMULATED ANNEALING---------")
+        print(self, end = " ")
         print(best_value)
         return best_value

@@ -1,0 +1,17 @@
+Simulated annealing  10916.333936889823
+Vreme:  0.11644512400016538 <class '_solvers.sa.SimulatedAnnealingSolver'>
+Greedy  11038.971924716823
+Vreme:  0.2730182880004577 <class '_solvers.greedy.GreedySolver'>
+2-approximation:  12961.726488425451
+Vreme:  0.8676162119991204 <class '_solvers.berkley.BerkleySolver'>
+Scatter:  11014.454679552726
+Vreme:  1.9427894680011377 <class '_solvers.scatter.ScatterSolver'>
+Tabu; Iterations 3000 1
+11049.717034220488
+Vreme:  33.3992614710005 <class '_solvers.tabu.TabuSolver'>
+Variable search neighbourhood:  10818.887361634512
+Vreme:  67.15937941800075 <class '_solvers.vns.VariableNeighbourhoodSearch'>
+Evoultionary; Pop_size 200 Iters: 500 Selection type: 1 n = 120 10815.505966924018
+Vreme:  99.47731853200094 <class '_solvers.es.EvolutionarySolver'>
+Dominating set:  11029.946865203461
+Vreme:  131.0899339360003 <class '_solvers.dsh.DominatingSet'>
